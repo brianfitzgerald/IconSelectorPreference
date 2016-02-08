@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"  >
     <PreferenceCategory
         android:title="Preferences">
 
@@ -14,11 +15,13 @@
         android:title="User">
 
 
-        <ListPreference
+        <com.brianfitzgerald.iconselectorpreferenceexample.IconListPreference
             android:key="list_preference"
             android:title="Current Mood"
             android:entries="@array/emotion_picker_entries"
-            android:entryValues="@array/emotion_picker_values" />
+            android:entryValues="@array/emotion_picker_values"
+            app:fileNames="@array/emotion_picker_files"
+            app:cellLayout="@layout/icon_list_cell"/>
 
     </PreferenceCategory>
 
