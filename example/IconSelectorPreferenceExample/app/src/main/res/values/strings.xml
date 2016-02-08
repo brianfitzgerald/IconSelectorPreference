@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">IconSelectorPreferenceExample</string>
+
+    <string name="value_laugh">Laughing</string>
+    <string name="value_cry">Crying</string>
+    <string name="value_sleepy">Sleepy</string>
+
+    <string-array name="emotion_picker_values">
+        <item>@string/value_cry</item>
+        <item>@string/value_laugh</item>
+        <item>@string/value_sleepy</item>
+    </string-array>
+
+    <string name="entry_laugh">Laughing</string>
+    <string name="entry_cry">Crying</string>
+    <string name="entry_sleepy">Sleepy</string>
+
+    <string-array name="emotion_picker_entries">
+        <item>@string/value_cry</item>
+        <item>@string/value_laugh</item>
+        <item>@string/value_sleepy</item>
+    </string-array>
+
+    <string name="file_laugh">laughing_icon</string>
+    <string name="file_cry">crying_icon</string>
+    <string name="file_sleepy">sleepy_icon</string>
+
+    <string-array name="emotion_picker_files">
+        <item>@string/value_cry</item>
+        <item>@string/value_laugh</item>
+        <item>@string/value_sleepy</item>
+    </string-array>
+
+</resources>
