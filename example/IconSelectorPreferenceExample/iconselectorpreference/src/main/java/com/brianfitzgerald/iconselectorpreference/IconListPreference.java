@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.PreferenceManager;
-import android.support.annotation.ArrayRes;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
@@ -19,8 +18,7 @@ import java.util.ArrayList;
 public class IconListPreference extends ListPreference {
     private static final String TAG = IconListPreference.class.getSimpleName();
 
-    @ArrayRes
-    private int iconFileNamesArray;
+    private CharSequence[] iconFileNamesArray;
     private CharSequence[] iconNames;
     private CharSequence[] iconValues;
     private String iconKey;
@@ -65,6 +63,10 @@ public class IconListPreference extends ListPreference {
 
     }
 
+    protected void setIconFileNamesArray (CharSequence[] fileNamesArray) {
+        this.iconFileNamesArray = fileNamesArray;
+    }
+
     @Override
     protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
 
@@ -75,7 +77,8 @@ public class IconListPreference extends ListPreference {
         iconValues = getEntryValues();
 
 
-        CharSequence[] fileNames = getContext().getResources().getStringArray(iconFileNamesArray);
+//        CharSequence[] fileNames = getContext().getResources().getStringArray(iconFileNamesArray);
+        CharSequence[] fileNames = {"happy", "sad", "sleepy"};
 
         String selectedIcon = PreferenceManager.getDefaultSharedPreferences(getContext()).getString(iconKey, "Undefined");
 
