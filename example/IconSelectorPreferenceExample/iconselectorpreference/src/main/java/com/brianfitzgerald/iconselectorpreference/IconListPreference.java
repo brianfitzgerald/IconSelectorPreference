@@ -1,4 +1,4 @@
-package com.brianfitzgerald.iconselectorpreferenceexample;
+package com.brianfitzgerald.iconselectorpreference;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by brianfitzgerald on 2/7/16.
+ * Created by brianfitzgerald on 2/8/16.
  */
 public class IconListPreference extends ListPreference {
     private static final String TAG = IconListPreference.class.getSimpleName();
@@ -34,11 +34,9 @@ public class IconListPreference extends ListPreference {
 
     public IconListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         iconKey = getKey();
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
-
 
     @Override
     protected void onBindView(View view) {

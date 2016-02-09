@@ -1,4 +1,4 @@
-package com.brianfitzgerald.iconselectorpreferenceexample;
+package com.brianfitzgerald.iconselectorpreference;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by brianfitzgerald on 2/7/16.
+ * Created by brianfitzgerald on 2/8/16.
  */
 public class IconListCell extends RelativeLayout {
     private static final String TAG = IconListCell.class.getSimpleName();
@@ -53,13 +53,11 @@ public class IconListCell extends RelativeLayout {
     }
 
     private void initialize() {
-        LayoutInflater.from(getContext()).inflate(R.layout.icon_list_cell, this);
+        LayoutInflater.from(getContext()).inflate(getResources().getIdentifier("icon_list_cell", "layout", getContext().getApplicationContext().getPackageName()), this);
 
-        nameTextView = (TextView) findViewById(R.id.iconName);
-
-        nameTextView = (TextView) findViewById(R.id.iconName);
-        iconImageView = (ImageView) findViewById(R.id.iconImage);
-        radioButton = (RadioButton) findViewById(R.id.iconRadio);
+        nameTextView = (TextView) findViewById(getResources().getIdentifier("iconName", "id", getContext().getApplicationContext().getPackageName()));
+        iconImageView = (ImageView) findViewById(getResources().getIdentifier("iconImage", "id", getContext().getApplicationContext().getPackageName()));
+        radioButton = (RadioButton) findViewById(getResources().getIdentifier("iconRadio", "id", getContext().getApplicationContext().getPackageName()));
 
         nameTextView.setText(iconNames[position].toString());
 

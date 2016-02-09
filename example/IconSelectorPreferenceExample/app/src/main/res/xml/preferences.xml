@@ -15,13 +15,11 @@
         android:title="User">
 
 
-        <com.brianfitzgerald.iconselectorpreferenceexample.IconListPreference
+        <com.brianfitzgerald.iconselectorpreference.IconListPreference
             android:key="list_preference"
             android:title="Current Mood"
             android:entries="@array/emotion_picker_entries"
-            android:entryValues="@array/emotion_picker_values"
-            app:fileNames="@array/emotion_picker_files"
-            app:cellLayout="@layout/icon_list_cell"/>
+            android:entryValues="@array/emotion_picker_values"/>
 
     </PreferenceCategory>
 

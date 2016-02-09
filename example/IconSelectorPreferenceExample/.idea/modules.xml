@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/IconSelectorPreferenceExample.iml" filepath="$PROJECT_DIR$/IconSelectorPreferenceExample.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/iconselectorpreference/iconselectorpreference.iml" filepath="$PROJECT_DIR$/iconselectorpreference/iconselectorpreference.iml" />
     </modules>
   </component>
 </project>

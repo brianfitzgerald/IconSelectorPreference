@@ -1,4 +1,4 @@
-package com.brianfitzgerald.iconselectorpreferenceexample;
+package com.brianfitzgerald.iconselectorpreference;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 
 /**
- * Created by brianfitzgerald on 2/7/16.
+ * Created by brianfitzgerald on 2/8/16.
  */
 class IconListPreferenceAdapter extends BaseAdapter {
     private static final String TAG = IconListPreferenceAdapter.class.getSimpleName();
