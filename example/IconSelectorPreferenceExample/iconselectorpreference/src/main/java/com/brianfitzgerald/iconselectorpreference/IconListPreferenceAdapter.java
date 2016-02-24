@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
@@ -16,24 +15,20 @@ import java.util.ArrayList;
 class IconListPreferenceAdapter extends BaseAdapter {
     private static final String TAG = IconListPreferenceAdapter.class.getSimpleName();
 
-    CharSequence[] iconNames;
-    CharSequence[] iconValues;
-    CharSequence[] fileNames;
-
     public Dialog dialog;
 
     private Context context;
 
-    ArrayList<Boolean> checkedStatuses;
+    private CharSequence[] titles;
+    private ArrayList<Boolean> checkedStatuses;
+    private ArrayList<Integer> drawableResources;
 
-    public IconListPreferenceAdapter(Context context, CharSequence[] iconNames, CharSequence[] iconValues, CharSequence[] fileNames, ArrayList<Boolean> checkedStatuses) {
-        this.checkedStatuses = checkedStatuses;
-        this.iconNames = iconNames;
-        this.iconValues = iconValues;
-        this.fileNames = fileNames;
+    public IconListPreferenceAdapter(Context context, ArrayList<Boolean> checkedStatuses) {
         this.context = context;
+        this.checkedStatuses = checkedStatuses;
         Log.d(TAG, "adapter create");
     }
+
 
     @Override
     public int getCount() {
@@ -50,26 +45,36 @@ class IconListPreferenceAdapter extends BaseAdapter {
         return position;
     }
 
+    public void setTitles(CharSequence[] titles) {
+        this.titles = titles;
+    }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        RelativeLayout layout = new IconListCell(context, position, fileNames, iconNames, checkedStatuses);
+        final IconListCell iconListCell;
+
+        if (convertView == null) {
+            iconListCell = new IconListCell(context);
+        } else {
+            iconListCell = (IconListCell) convertView;
+        }
+
+        iconListCell.setViewData(titles[position], drawableResources.get(position), checkedStatuses.get(position));
 
         View.OnClickListener dialogItemClickListener = new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                for (int i = 0; i < checkedStatuses.size(); i++) {
-                    checkedStatuses.set(i, i == position);
-                }
+                Log.d(TAG, "clicked");
                 dialog.dismiss();
             }
 
         };
 
-        layout.setOnClickListener(dialogItemClickListener);
+//        iconListCell.setOnClickListener(dialogItemClickListener);
 
-        return layout;
+        return iconListCell;
 
     }
 

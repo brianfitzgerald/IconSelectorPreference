@@ -15,7 +15,7 @@
         android:title="User">
 
 
-        <com.brianfitzgerald.iconselectorpreferenceexample.CustomListPreference
+        <com.brianfitzgerald.iconselectorpreference.IconListPreference
             android:key="list_preference"
             android:title="Current Mood"
             android:entries="@array/emotion_picker_entries"

@@ -2,11 +2,10 @@ package com.brianfitzgerald.iconselectorpreference;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Bundle;
+import android.content.DialogInterface;
 import android.preference.ListPreference;
-import android.preference.PreferenceManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,22 +17,25 @@ import java.util.ArrayList;
 public class IconListPreference extends ListPreference {
     private static final String TAG = IconListPreference.class.getSimpleName();
 
-    private CharSequence[] iconFileNamesArray;
-    private CharSequence[] iconNames;
-    private CharSequence[] iconValues;
-    private String iconKey;
-
-    private SharedPreferences preferences;
     private TextView summaryTextView;
-
-    private ArrayList<Boolean> checkedStatuses = new ArrayList<>();
-
     IconListPreferenceAdapter iconListPreferenceAdapter;
+
+    ArrayList<Boolean> checkedStatuses;
+
+    public IconListPreference(Context context) {
+        super(context);
+    }
 
     public IconListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        iconKey = getKey();
-        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    public IconListPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    public IconListPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override
@@ -45,58 +47,42 @@ public class IconListPreference extends ListPreference {
     @Override
     protected void onDialogClosed(boolean positiveResult) {
         super.onDialogClosed(positiveResult);
-
-        if (iconNames != null) {
-            for (int i = 0; i < iconNames.length; i++) {
-                if (checkedStatuses.get(i)) {
-
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString(iconKey, iconValues[i].toString());
-                    summaryTextView.setText(iconValues[i]);
-                    editor.apply();
-
-                    break;
-                }
-            }
-        }
-
-
-    }
-
-    protected void setIconFileNamesArray (CharSequence[] fileNamesArray) {
-        this.iconFileNamesArray = fileNamesArray;
+//        summaryTextView.setText();
     }
 
     @Override
     protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
+        super.onPrepareDialogBuilder(builder);
 
         builder.setNegativeButton("Cancel", null);
         builder.setPositiveButton(null, null);
 
-        iconNames = getEntries();
-        iconValues = getEntryValues();
+        checkedStatuses = new ArrayList<>();
+        checkedStatuses.add(0, true);
+        checkedStatuses.add(1, false);
+        checkedStatuses.add(2, false);
 
-
-//        CharSequence[] fileNames = getContext().getResources().getStringArray(iconFileNamesArray);
-        CharSequence[] fileNames = {"happy", "sad", "sleepy"};
-
-        String selectedIcon = PreferenceManager.getDefaultSharedPreferences(getContext()).getString(iconKey, "Undefined");
-
-        if (checkedStatuses.size() != 27) {
-            for (int i = 0; i < iconNames.length; i++) {
-                boolean isSelected = selectedIcon.equals(fileNames[i]);
-                checkedStatuses.add(isSelected);
+        iconListPreferenceAdapter = new IconListPreferenceAdapter(getContext(), checkedStatuses);
+        builder.setAdapter(iconListPreferenceAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.d(TAG, String.valueOf(which));
             }
-        }
+        });
 
-
-        iconListPreferenceAdapter = new IconListPreferenceAdapter(getContext(), getEntries(), getEntryValues(), fileNames, this.checkedStatuses);
-        builder.setAdapter(iconListPreferenceAdapter, null);
     }
 
     @Override
-    protected void showDialog(Bundle state) {
-        super.showDialog(state);
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
         iconListPreferenceAdapter.setDialogReference(getDialog());
+    }
+
+    @Override
+    public CharSequence[] getEntryValues() {
+        if (iconListPreferenceAdapter != null) {
+            iconListPreferenceAdapter.setTitles(super.getEntryValues());
+        }
+        return super.getEntryValues();
     }
 }

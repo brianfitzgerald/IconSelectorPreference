@@ -1,6 +1,8 @@
 package com.brianfitzgerald.iconselectorpreference;
 
 import android.content.Context;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -8,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 /**
  * Created by brianfitzgerald on 2/8/16.
@@ -26,19 +26,8 @@ public class IconListCell extends RelativeLayout {
     @LayoutRes
     int cellResource;
 
-
-    CharSequence[] fileNames;
-    CharSequence[] iconNames;
-    ArrayList<Boolean> checkedStatuses = new ArrayList<>();
-
-    public IconListCell(Context context, int position, CharSequence[] fileNames, CharSequence[] iconNames, ArrayList<Boolean> checkedStatuses) {
+    public IconListCell(Context context) {
         super(context);
-
-        this.position = position;
-        this.fileNames = fileNames;
-        this.iconNames = iconNames;
-        this.checkedStatuses = checkedStatuses;
-
         initialize();
     }
 
@@ -53,19 +42,18 @@ public class IconListCell extends RelativeLayout {
     }
 
     private void initialize() {
-        LayoutInflater.from(getContext()).inflate(getResources().getIdentifier("icon_list_cell", "layout", getContext().getApplicationContext().getPackageName()), this);
+        LayoutInflater.from(getContext()).inflate(cellResource, this);
+    }
 
-        nameTextView = (TextView) findViewById(getResources().getIdentifier("iconName", "id", getContext().getApplicationContext().getPackageName()));
-        iconImageView = (ImageView) findViewById(getResources().getIdentifier("iconImage", "id", getContext().getApplicationContext().getPackageName()));
-        radioButton = (RadioButton) findViewById(getResources().getIdentifier("iconRadio", "id", getContext().getApplicationContext().getPackageName()));
+    public void setLayoutReferences(@IdRes int nameTextViewId, @IdRes int iconImageViewId, @IdRes int radioButtonViewId) {
+        nameTextView = (TextView) findViewById(nameTextViewId);
+        iconImageView = (ImageView) findViewById(iconImageViewId);
+        radioButton = (RadioButton) findViewById(radioButtonViewId);
+    }
 
-        nameTextView.setText(iconNames[position].toString());
-
-        int identifier = getContext().getResources().getIdentifier(fileNames[position].toString(), "drawable", getContext().getPackageName());
-        iconImageView.setImageResource(identifier);
-
-        radioButton.setChecked(checkedStatuses.get(position));
-
-
+    public void setViewData(CharSequence name, @DrawableRes int iconResource, boolean isChecked) {
+        nameTextView.setText(name);
+        iconImageView.setImageResource(iconResource);
+        radioButton.setChecked(isChecked);
     }
 }
