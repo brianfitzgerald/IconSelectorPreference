@@ -56,4 +56,8 @@ public class IconListCell extends RelativeLayout {
         iconImageView.setImageResource(iconResource);
         radioButton.setChecked(isChecked);
     }
+
+    public void setViewData(Enum anEnum, boolean isChecked) {
+
+    }
 }

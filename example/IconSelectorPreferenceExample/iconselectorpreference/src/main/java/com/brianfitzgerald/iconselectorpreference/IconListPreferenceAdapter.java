@@ -2,7 +2,7 @@ package com.brianfitzgerald.iconselectorpreference;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.util.Log;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -17,27 +17,29 @@ class IconListPreferenceAdapter extends BaseAdapter {
 
     public Dialog dialog;
 
+
+    String selectedIcon;
+
     private Context context;
+    private ArrayList<IconOption> iconOptions;
+    private String preferenceKey;
 
-    private CharSequence[] titles;
-    private ArrayList<Boolean> checkedStatuses;
-    private ArrayList<Integer> drawableResources;
-
-    public IconListPreferenceAdapter(Context context, ArrayList<Boolean> checkedStatuses) {
+    public IconListPreferenceAdapter(Context context, ArrayList<IconOption> iconOptions, String preferenceKey) {
+        this.iconOptions = iconOptions;
         this.context = context;
-        this.checkedStatuses = checkedStatuses;
-        Log.d(TAG, "adapter create");
+        this.preferenceKey = preferenceKey;
+        selectedIcon = this.getSelectedIconInPreferences();
     }
 
 
     @Override
     public int getCount() {
-        return checkedStatuses.size();
+        return iconOptions.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return checkedStatuses.get(position);
+        return iconOptions.get(position);
     }
 
     @Override
@@ -45,9 +47,6 @@ class IconListPreferenceAdapter extends BaseAdapter {
         return position;
     }
 
-    public void setTitles(CharSequence[] titles) {
-        this.titles = titles;
-    }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -55,32 +54,34 @@ class IconListPreferenceAdapter extends BaseAdapter {
         final IconListCell iconListCell;
 
         if (convertView == null) {
-            iconListCell = new IconListCell(context);
+            iconListCell = new IconListCell(parent.getContext());
         } else {
             iconListCell = (IconListCell) convertView;
         }
 
-        iconListCell.setViewData(titles[position], drawableResources.get(position), checkedStatuses.get(position));
+        iconListCell.setViewData(iconOptions.get(position), iconOptions.get(position).getName().equals(selectedIcon));
 
         View.OnClickListener dialogItemClickListener = new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "clicked");
                 dialog.dismiss();
             }
 
         };
 
-//        iconListCell.setOnClickListener(dialogItemClickListener);
+        iconListCell.setOnClickListener(dialogItemClickListener);
 
         return iconListCell;
 
     }
 
     public void setDialogReference(Dialog dialog) {
-        this.dialog = dialog;
     }
 
+    public String getSelectedIconInPreferences() {
+        PreferenceManager.getDefaultSharedPreferences(context).getString(preferenceKey, "Happy");
+        return selectedIcon;
+    }
 }
 

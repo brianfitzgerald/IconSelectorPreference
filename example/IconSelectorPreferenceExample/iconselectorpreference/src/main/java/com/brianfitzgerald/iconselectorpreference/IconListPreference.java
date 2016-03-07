@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by brianfitzgerald on 2/8/16.
@@ -20,7 +21,11 @@ public class IconListPreference extends ListPreference {
     private TextView summaryTextView;
     IconListPreferenceAdapter iconListPreferenceAdapter;
 
-    ArrayList<Boolean> checkedStatuses;
+    private ArrayList<IconOption> selectedOptions;
+
+    public void setIconEnums(IconOption[] enums) {
+        selectedOptions = new ArrayList<>(Arrays.asList(enums));
+    }
 
     public IconListPreference(Context context) {
         super(context);
@@ -57,12 +62,8 @@ public class IconListPreference extends ListPreference {
         builder.setNegativeButton("Cancel", null);
         builder.setPositiveButton(null, null);
 
-        checkedStatuses = new ArrayList<>();
-        checkedStatuses.add(0, true);
-        checkedStatuses.add(1, false);
-        checkedStatuses.add(2, false);
 
-        iconListPreferenceAdapter = new IconListPreferenceAdapter(getContext(), checkedStatuses);
+        iconListPreferenceAdapter = new IconListPreferenceAdapter(getContext(), selectedOptions, "Icon");
         builder.setAdapter(iconListPreferenceAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -78,11 +79,4 @@ public class IconListPreference extends ListPreference {
         iconListPreferenceAdapter.setDialogReference(getDialog());
     }
 
-    @Override
-    public CharSequence[] getEntryValues() {
-        if (iconListPreferenceAdapter != null) {
-            iconListPreferenceAdapter.setTitles(super.getEntryValues());
-        }
-        return super.getEntryValues();
-    }
 }

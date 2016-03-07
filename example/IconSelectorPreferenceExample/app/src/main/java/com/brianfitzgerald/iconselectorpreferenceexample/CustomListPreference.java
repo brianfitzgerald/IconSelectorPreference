@@ -11,5 +11,6 @@ import com.brianfitzgerald.iconselectorpreference.IconListPreference;
 public class CustomListPreference extends IconListPreference {
     public CustomListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.setIconEnums(IconOption.values());
     }
 }
